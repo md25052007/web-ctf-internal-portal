@@ -1,0 +1,247 @@
+/* ---------- GLOBAL ---------- */
+* {
+    box-sizing: border-box;
+}
+
+/* Better, modern font stack (no downloads needed) */
+:root {
+    --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+            Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    --bg: #eef1f4;
+    --card: #ffffff;
+    --text: #111827;
+    --muted: #6b7280;
+    --border: #d1d5db;
+    --shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+    --nav: #243447;
+    --nav-hover: #1a2530;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --warn-bg: #fff7ed;
+    --warn-border: #fb923c;
+    --info-bg: #f0f9ff;
+    --info-border: #38bdf8;
+    --danger: #b91c1c;
+}
+
+body {
+    font-family: var(--font);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+    color: var(--text);
+}
+
+/* ---------- HEADER / NAV ---------- */
+header {
+    background: var(--nav);
+    padding: 14px 30px;
+}
+
+nav {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+nav a {
+    color: #dce3ea;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background 120ms ease, color 120ms ease;
+}
+
+nav a:hover {
+    color: #ffffff;
+    background: var(--nav-hover);
+}
+
+/* ---------- PAGE WRAPPER ---------- */
+.container {
+    width: 860px;
+    max-width: calc(100% - 40px);
+    margin: 36px auto;
+}
+
+/* ---------- CARD ---------- */
+.card {
+    background: var(--card);
+    padding: 26px;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    margin-bottom: 18px;
+    border: 1px solid rgba(209, 213, 219, 0.55);
+}
+
+.card h2 {
+    margin: 0 0 14px 0;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+}
+
+/* ---------- TEXT UTILS ---------- */
+.muted {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+hr.soft {
+    border: 0;
+    border-top: 1px solid rgba(209, 213, 219, 0.6);
+    margin: 18px 0;
+}
+
+/* ---------- FORMS ---------- */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 15px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    outline: none;
+    background: #ffffff;
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: rgba(37, 99, 235, 0.8);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+input::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+}
+
+/* ---------- BUTTONS ---------- */
+button {
+    width: auto;
+    padding: 11px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: var(--primary);
+    color: white;
+    transition: background 120ms ease, transform 60ms ease;
+}
+
+button:hover {
+    background: var(--primary-hover);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+/* ---------- MESSAGES ---------- */
+.message {
+    padding: 12px 14px;
+    background: var(--info-bg);
+    border-left: 5px solid var(--info-border);
+    border-radius: 10px;
+    margin-top: 12px;
+    color: #0b3a55;
+}
+
+.warning {
+    padding: 12px 14px;
+    background: var(--warn-bg);
+    border-left: 5px solid var(--warn-border);
+    border-radius: 10px;
+    margin-top: 12px;
+    color: #7c2d12;
+}
+
+/* ---------- STATUS TABLE ---------- */
+.status-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 14px;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid rgba(209, 213, 219, 0.8);
+}
+
+.status-table th, .status-table td {
+    padding: 12px 12px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.status-table th {
+    background: #f8fafc;
+    color: #0f172a;
+    font-weight: 800;
+}
+
+.status-table tr td {
+    border-top: 1px solid rgba(209, 213, 219, 0.6);
+}
+
+.status-table tr:nth-child(even) td {
+    background: #fcfcfd;
+}
+
+/* ---------- NO ACCESS ---------- */
+.no-access {
+    border-left: 6px solid var(--danger);
+}
+
+.no-access h2 {
+    color: var(--danger);
+}
+
+/* ---------- ADMIN ERROR ---------- */
+.admin-error {
+    width: 92%;
+    margin: 30px auto;
+    padding: 26px;
+    background: #ffffff;
+    border: 1px solid rgba(209, 213, 219, 0.9);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+}
+
+.admin-error h1 {
+    color: #991b1b;
+    font-size: 22px;
+    margin: 0 0 8px 0;
+}
+
+.error-sub {
+    color: #374151;
+    margin: 0 0 16px 0;
+    font-size: 14px;
+}
+
+.error-block {
+    background: #f8fafc;
+    border: 1px solid rgba(209, 213, 219, 0.9);
+    padding: 16px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.6;
+    border-radius: 12px;
+}
+
+.flag-inline {
+    margin-top: 18px;
+    font-size: 12px;
+    color: #6b7280;
+}
