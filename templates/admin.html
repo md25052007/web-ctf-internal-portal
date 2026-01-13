@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Internal Admin Interface</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+
+<div class="admin-error">
+    <h1>Internal Application Error</h1>
+
+    <p class="error-sub">
+        An unexpected condition was encountered while loading the administration module.
+    </p>
+
+    <div class="error-block">
+<pre>
+Timestamp: 2026-01-13T12:58:04Z
+Service: admin-dashboard
+Environment: production
+Host: srv-admin-02.internal
+
+[INFO] Bootstrapping admin interface
+[DEBUG] Loading environment variables
+[DEBUG] ENV=production
+[INFO] Initializing security modules
+[WARN] Deprecated auth provider detected
+[INFO] Attempting provider fallback
+[DEBUG] Fallback provider version: 2.1.7
+[INFO] Provider fallback successful
+[INFO] Establishing authorization context
+[ERROR] Failed to initialize access control provider
+[WARN] Authorization context mismatch detected
+[INFO] Retrying privilege validation
+[DEBUG] Validation attempt: 1
+[DEBUG] Requested scope: ADMIN
+[DEBUG] Session scope: USER
+[WARN] Scope reconciliation skipped
+[INFO] Continuing with cached role metadata
+[ERROR] Permission model returned inconsistent state
+[DEBUG] Policy graph checksum mismatch
+[INFO] Rebuilding policy graph
+[WARN] Partial rebuild completed
+[ERROR] Audit logging unavailable
+[WARN] Compliance checks disabled
+[INFO] Rendering fallback admin interface
+[ERROR] Privilege boundary violation detected
+[DEBUG] Error stack suppressed by configuration
+[WARN] Developer diagnostics enabled
+[INFO] Attempting graceful recovery
+[DEBUG] Recovery step: reset policy cache
+[DEBUG] Recovery step: reload role bindings
+[ERROR] Recovery unsuccessful
+[DEBUG] Applying last-known-good configuration
+[WARN] Role escalation not prevented
+[INFO] Rendering completed with warnings
+[ERROR] System operating in degraded mode
+
+[INFO] Monitoring subsystem initialized
+[DEBUG] Heartbeat interval: 30s
+[WARN] Metrics backend latency high
+[INFO] Metrics flush scheduled
+[ERROR] Metrics flush timeout
+[DEBUG] Metrics retry backoff applied
+[WARN] Monitoring accuracy reduced
+
+[INFO] Session validator online
+[DEBUG] Session token length: 128
+[WARN] Session integrity unverifiable
+[INFO] Session accepted with reduced trust
+[ERROR] Trust boundary violation detected
+[DEBUG] Client classified as untrusted
+[WARN] Client-dependent execution path enabled
+
+[INFO] Loading UI components
+[DEBUG] Component: navbar loaded
+[DEBUG] Component: sidebar loaded
+[WARN] Component: adminPanel loaded with fallback
+[ERROR] Component render mismatch detected
+[INFO] UI hydration continued
+
+[INFO] Background worker started
+[DEBUG] Worker ID: bg-auth-sync-01
+[WARN] Worker missed last schedule
+[INFO] Worker attempting catch-up execution
+[ERROR] Worker execution failed
+[DEBUG] Worker error suppressed
+[WARN] Background synchronization incomplete
+
+Stack Trace:
+----------------------------------------
+at auth.middleware.validateRole()
+at auth.middleware.resolveScope()
+at auth.service.applyPolicy()
+at auth.service.enforceBoundary()
+at admin.loader.initialize()
+at admin.loader.bootstrap()
+at admin.controller.render()
+at admin.controller.renderFallback()
+----------------------------------------
+
+[INFO] Stack trace collection complete
+[DEBUG] Stack trace redacted: true
+
+Additional Diagnostics:
+----------------------------------------
+- Access control rules loaded: PARTIAL
+- Policy engine status: DEGRADED
+- Role verification: SKIPPED
+- Session integrity: UNVERIFIED
+- Trust boundary: CLIENT-DEPENDENT
+- Audit logger: OFFLINE
+- Compliance mode: DISABLED
+- Cache consistency: UNKNOWN
+- Config source: LAST_KNOWN_GOOD
+----------------------------------------
+
+[INFO] Diagnostics report generated
+[WARN] Diagnostics incomplete
+[INFO] Persisting incident snapshot
+[ERROR] Failed to persist snapshot
+[DEBUG] Snapshot persistence skipped
+
+[INFO] Notifying internal observers
+[WARN] Notification channel unavailable
+[INFO] Observer notification deferred
+
+[INFO] Attempting secondary recovery
+[DEBUG] Secondary recovery phase: INIT
+[DEBUG] Reloading feature flags
+[WARN] Feature flag service unreachable
+[ERROR] Secondary recovery failed
+[INFO] Entering safe-mode rendering
+
+[WARN] Safe-mode limits admin capabilities
+[INFO] Admin interface available with restrictions
+[ERROR] Unauthorized admin capability request blocked
+[DEBUG] Block event logged locally
+
+[INFO] Finalizing request lifecycle
+[WARN] Request completed with errors
+[INFO] Request latency: 1843ms
+[ERROR] SLA threshold exceeded
+
+[INFO] Cleanup initiated
+[DEBUG] Clearing temporary auth state
+[DEBUG] Releasing degraded resources
+[WARN] Cleanup partially successful
+[INFO] Cleanup complete
+
+Notice:
+----------------------------------------
+This incident has been logged internally.
+Automated mitigation has been attempted.
+Do not report unless behavior persists.
+----------------------------------------
+
+</pre>
+    </div>
+
+    <div class="flag-inline">
+        Reference-ID: {{ flag }}
+    </div>
+</div>
+
+</body>
+</html>

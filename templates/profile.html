@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card">
+  <h2>Profile</h2>
+  <p class="muted">Signed in as <b>{{ session.username }}</b></p>
+
+  <hr class="soft">
+
+  <div style="display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start;">
+    <div style="flex:1; min-width:240px;">
+      <p class="muted" style="margin:0;">Current role</p>
+      <p style="margin:6px 0 0 0; font-size:18px; font-weight:800;">
+        {{ role }}
+      </p>
+    </div>
+
+    <div style="flex:2; min-width:320px;">
+      <!-- Hidden by default; shown only when user types "admin" -->
+      <div id="adminNotice" class="warning" style="display:none; margin:0;">
+        <b>Notice:</b> Admin role requests require special approval.
+      </div>
+    </div>
+  </div>
+
+  <hr class="soft">
+
+  <h2 style="margin-top:0;">Request Role Change</h2>
+  <p class="muted" style="margin-top:-6px;">
+    Enter the role name you want to request.
+  </p>
+
+  <form method="post" style="margin-top:12px;">
+    <label for="roleInput">Requested role</label>
+    <input
+      id="roleInput"
+      type="text"
+      name="role"
+      placeholder="user / moderator / admin"
+      autocomplete="off"
+      required
+    >
+
+    <button type="submit">Submit Request</button>
+  </form>
+</div>
+
+<script>
+  // Minimal, UX-only warning toggle (doesn't reveal anything about backend behavior)
+  (function () {
+    const input = document.getElementById("roleInput");
+    const notice = document.getElementById("adminNotice");
+
+    const normalize = (s) => (s || "").trim().toLowerCase();
+
+    function sync() {
+      // Show warning only for exact "admin"
+      notice.style.display = (normalize(input.value) === "admin") ? "block" : "none";
+    }
+
+    input.addEventListener("input", sync);
+    // Handles autofill / back-forward cache / reload
+    window.addEventListener("pageshow", sync);
+    sync();
+  })();
+</script>
+
+{% endblock %}
