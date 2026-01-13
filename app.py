@@ -73,11 +73,11 @@ def status():
         return redirect(url_for("login"))
 
     hint = None
-    if session["count"] % 3 == 0:
+    if session["count"] > 0 and session["count"] % 3 == 0:
         index = (session["count"] // 3) - 1
         if index < len(HINTS):
             hint = HINTS[index]
-
+    
     return render_template(
         "status.html",
         requests=session["requests"],
@@ -98,3 +98,4 @@ def admin():
 
 if __name__ == "__main__":
     app.run()
+
