@@ -5,10 +5,13 @@ app.secret_key = "dev_secret_key"
 
 FLAG = "IET{pr3d1ct1ng_f41lur3_cr34t3$_1t}"
 
+# NEW LOGIN PASSWORD (from your XOR challenge plaintext)
+LOGIN_PASSWORD = "FLAG{n!c3_tr&_but_n0p3_n0t_th3_fl@g}"
+
 HINTS = [
-    "HINT: Not all security flaws come from malicious input. Sometimes the system behaves exactly as designed.",
-    "HINT: Pay close attention to what the client sends to the server. Ask which values should never be trusted.",
-    "HINT: Messages and status indicators do not always reflect real system state. Verify access instead of trusting UI."
+    "Not all security flaws come from malicious input. Sometimes the system behaves exactly as designed.",
+    "Pay close attention to what the client sends to the server. Ask which values should never be trusted.",
+    "Messages and status indicators do not always reflect real system state. Verify access instead of trusting UI."
 ]
 
 def init_session():
@@ -28,7 +31,8 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
 
-        if username and password == "Password":
+        # Username is anything; password must match the decoded value
+        if username and password == LOGIN_PASSWORD:
             session.clear()
             session["logged_in"] = True
             session["username"] = username
@@ -40,6 +44,11 @@ def login():
             error = "Invalid credentials"
 
     return render_template("login.html", error=error)
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("login"))
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
@@ -73,11 +82,12 @@ def status():
         return redirect(url_for("login"))
 
     hint = None
+    # FIXED: don't show hint at 0 requests
     if session["count"] > 0 and session["count"] % 3 == 0:
         index = (session["count"] // 3) - 1
         if index < len(HINTS):
             hint = HINTS[index]
-    
+
     return render_template(
         "status.html",
         requests=session["requests"],
@@ -95,7 +105,5 @@ def admin():
 
     return render_template("admin.html", flag=FLAG)
 
-
 if __name__ == "__main__":
     app.run()
-
