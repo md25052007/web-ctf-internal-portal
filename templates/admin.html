@@ -20,6 +20,34 @@ Service: admin-dashboard
 Environment: production
 Host: srv-admin-02.internal
 
+[2026-01-25T03:12:01.442Z] [TRACE] [io.netty.channel.DefaultChannelPipeline] - Handling outbound message: HTTP/1.1 POST /api/v2/auth/verify-claims
+[2026-01-25T03:12:01.445Z] [DEBUG] [com.auth.internal.JwtValidator] - Decoding JWT header: {"alg":"RS256","typ":"JWT","kid":"pub-key-2025-04"}
+[2026-01-25T03:12:01.450Z] [INFO]  [com.infra.gateway.RequestRouter] - Routing request ID: req-882f-991c-772a to downstream cluster 'identity-svc'
+[2026-01-25T03:12:01.882Z] [WARN]  [com.netflix.hystrix.CircuitBreaker] - identity-svc circuit-breaker state: OPEN (failure rate: 64.2%)
+[2026-01-25T03:12:01.883Z] [ERROR] [com.auth.internal.ScopeManager] - Critical failure in Policy Evaluation Point (PEP). Memory address: 0x7FFEE3A29B10
+[2026-01-25T03:12:01.883Z] [FATAL] [org.hibernate.engine.jdbc.spi.SqlExceptionHelper] - [Deadlock detected] Connection 188 blocked by Process 902 on PG_CATALOG.PG_AUTHID
+[2026-01-25T03:12:01.884Z] [DEBUG] [com.auth.cache.RedisDriver] - Cache miss for key: user:session:b822-ff1a. Failover to secondary cluster: fail.
+[2026-01-25T03:12:01.885Z] [ERROR] [admin.auth.Reconciler] - Reconciliation failed. Local state (v42) diverges from Global state (v48). 
+[2026-01-25T03:12:01.886Z] [WARN]  [admin.auth.Reconciler] - Attempting atomic rollback of transaction TX-9928...
+[2026-01-25T03:12:01.890Z] [ERROR] [admin.auth.Reconciler] - Rollback failed: Transaction log corruption at offset 0xAF22.
+
+--- STACK TRACE ---
+java.lang.SecurityException: Illegal capability elevation attempt detected in thread 'executor-42'
+    at com.internal.security.Enforcer.checkPermission(Enforcer.java:412)
+    at com.internal.security.Enforcer.validateEffectiveRights(Enforcer.java:128)
+    at com.admin.dashboard.AdminAccessBridge.init(AdminAccessBridge.java:88)
+    at com.admin.dashboard.Bootstrap.main(Bootstrap.java:14)
+Caused by: io.grpc.StatusRuntimeException: UNAVAILABLE: io exception
+    at io.grpc.stub.ClientCalls.toStatusRuntimeEx(ClientCalls.java:271)
+    at io.grpc.stub.ClientCalls.getUnchecked(ClientCalls.java:252)
+-----------------
+
+[2026-01-25T03:12:02.102Z] [INFO]  [sys.telemetry.Agent] - Scrapping metrics... Buffer overflow in /var/log/stats.db.
+[2026-01-25T03:12:02.105Z] [DEBUG] [sys.telemetry.Agent] - Dropping 412 points from 'latency.p99.auth'
+[2026-01-25T03:12:02.341Z] [ERROR] [admin.ui.Renderer] - React Hydration Error: ID mismatch "0.1.2.4" vs server "0.1.2.9".
+[2026-01-25T03:12:02.345Z] [WARN]  [admin.ui.Renderer] - Falling back to Static SSR (Server Side Rendering). Interaction will be disabled.
+[2026-01-25T03:12:02.550Z] [DEBUG] [io.grpc.netty.NettyClientHandler] - [id: 0x82ba2211, L:/10.244.18.29:54122 - R:svc-identity/10.244.1.4:443] OUTBOUND SETTINGS: ack=false
+
 [INFO] Bootstrapping admin interface
 [DEBUG] Loading environment variables
 [DEBUG] ENV=production
@@ -165,4 +193,5 @@ Do not report unless behavior persists.
 
 </body>
 </html>
+
 
