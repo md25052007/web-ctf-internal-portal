@@ -7,6 +7,7 @@ FLAG = "IET{pr3d1ct1ng_f41lur3_cr34t3$_1t}"
 
 # NEW LOGIN PASSWORD (from your XOR challenge plaintext)
 LOGIN_PASSWORD = "FLAG{n!c3_tr&_but_n0p3_n0t_th3_fl@g}"
+ALLOWED_ROLES = {"user", "moderator", "admin"}
 
 HINTS = [
     "Not all security flaws come from malicious input. Sometimes the system behaves exactly as designed.",
@@ -57,21 +58,35 @@ def profile():
         return redirect(url_for("login"))
 
     if request.method == "POST":
-        requested_role = request.form.get("role")
+        requested_role_raw = request.form.get("role", "")
+        requested_role = requested_role_raw.strip().lower()
         current_role = session["role"]
-
+        
         session["count"] += 1
-
-        # ❌ INTENTIONAL AUTHORIZATION LOGIC FLAW
+        
+        # ✅ Validate role
+        if requested_role not in ALLOWED_ROLES:
+            session["requests"].append({
+                "requested": requested_role_raw,
+                "status": "Invalid Role"
+            })
+            return render_template(
+                "profile.html",
+                role=session["role"],
+                error="Invalid role. Allowed roles: user, moderator, admin."
+            )
+        
+        # ❌ Keep your intentional bug exactly the same
         if requested_role == current_role:
             session["role"] = "admin"
-
+        
         session["requests"].append({
             "requested": requested_role,
             "status": "Pending"
         })
-
+        
         return redirect(url_for("status"))
+
 
     return render_template("profile.html", role=session["role"])
 
@@ -107,3 +122,4 @@ def admin():
 
 if __name__ == "__main__":
     app.run()
+
