@@ -1,29 +1,50 @@
 {% extends "base.html" %}
 {% block content %}
+
 <div class="card">
-    <h2>Request Status</h2>
+  <h2>Authorization Requests</h2>
 
-    <p>
-        You receive <b>one hint for every 3 role change requests</b>.In total there are three.
-    </p>
+  <p class="muted" style="margin-top:-6px;">
+    Requests are recorded immediately. Status updates may be delayed.
+    <br>
+    Observational notes may appear after repeated submissions (every <b>3</b> requests; max <b>3</b> notes).
+  </p>
 
-    <table class="status-table">
-        <tr>
-            <th>Requested Role</th>
-            <th>Status</th>
-        </tr>
-        {% for r in requests %}
-        <tr>
-            <td>{{ r.requested }}</td>
-            <td>{{ r.status }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+  <table class="status-table">
+    <tr>
+      <th>Requested State</th>
+      <th>Recorded Status</th>
+    </tr>
+    {% for r in requests %}
+    <tr>
+      <td style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;">
+        {{ r.requested }}
+      </td>
+      <td>
+        {% if r.status == "Pending" %}
+          <span style="display:inline-block; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:800; background:#eef2ff; color:#3730a3;">
+            Pending
+          </span>
+        {% elif r.status == "Invalid Role" %}
+          <span style="display:inline-block; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:800; background:#fff7ed; color:#7c2d12;">
+            Invalid Role
+          </span>
+        {% else %}
+          <span style="display:inline-block; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:800; background:#f3f4f6; color:#374151;">
+            {{ r.status }}
+          </span>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
 
-    {% if hint %}
-    <div class="message">
-        {{ hint }}
-    </div>
-    {% endif %}
+  {% if hint %}
+  <div class="message" style="margin-top:16px;">
+    <b>Observation Note</b><br>
+    {{ hint }}
+  </div>
+  {% endif %}
 </div>
+
 {% endblock %}
