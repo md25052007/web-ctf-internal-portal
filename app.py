@@ -73,7 +73,7 @@ def profile():
             return render_template(
                 "profile.html",
                 role=session["role"],
-                error="Invalid role. Allowed roles: user, moderator, admin."
+                error="Invalid role."
             )
         
         # ❌ Keep your intentional bug exactly the same
@@ -122,4 +122,5 @@ def admin():
 
 if __name__ == "__main__":
     app.run()
+
 
