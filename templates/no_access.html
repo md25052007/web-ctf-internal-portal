@@ -1,16 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="card no-access">
-    <h2>Access Denied</h2>
-    <p>You do not have sufficient privileges to view this page.</p>
 
-    <ul>
-        <li>Your role does not permit administrative access</li>
-        <li>This action has been logged</li>
-        <li>Contact an administrator if you believe this is an error</li>
-    </ul>
+<div class="card">
+    <h2>Authorization State Insufficient</h2>
+
+    <p class="muted">
+        Your current authorization state does not permit this operation.
+    </p>
+
+    <div class="message" style="margin-top:14px;">
+        Module: <b>admin</b><br>
+        Result: <b>blocked</b><br>
+        Action: <span class="muted">verify authorization state and retry</span>
+    </div>
+
+    <div style="margin-top:16px;">
+        <a href="/profile" style="text-decoration:none;">
+            <button type="button">Return to Profile</button>
+        </a>
+    </div>
 </div>
+
 {% endblock %}
-
-
-
