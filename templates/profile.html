@@ -2,54 +2,55 @@
 {% block content %}
 
 <div class="card">
-  <h2>Profile</h2>
-  <p class="muted">Signed in as <b>{{ session.username }}</b></p>
-
-  <hr class="soft">
-
-  <div style="display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start;">
-    <div style="flex:1; min-width:240px;">
-      <p class="muted" style="margin:0;">Current role</p>
-      <p style="margin:6px 0 0 0; font-size:18px; font-weight:800;">
-        {{ role }}
-      </p>
+  <div class="card-head">
+    <div>
+      <h2 class="title">Identity Configuration</h2>
+      <p class="muted">Subject Identifier: <b>{{ session.username }}</b></p>
     </div>
 
-    <div style="flex:2; min-width:320px;">
-      <!-- Hidden by default; shown only when user types "admin" -->
-      <div id="adminNotice" class="warning" style="display:none; margin:0;">
-        <b>Notice:</b> Admin role requests require special approval.
-      </div>
+    <div class="pill">
+      <span class="pill-label">Authorization State</span>
+      <span class="pill-value">{{ role }}</span>
     </div>
   </div>
 
   <hr class="soft">
 
-  <h2 style="margin-top:0;">Request Role Change</h2>
-  <p class="muted" style="margin-top:-6px;">
-    Enter the role name you want to request.
-  </p>
+  <!-- Hidden by default; shown only when user types "admin" -->
+  <div id="adminNotice" class="callout warn" style="display:none;">
+    <div class="callout-title">Notice</div>
+    <div class="callout-body">Admin role requests require special approval.</div>
+  </div>
+
   {% if error %}
-  <div class="message">{{ error }}</div>
+    <div class="callout danger">
+      <div class="callout-title">Input rejected</div>
+      <div class="callout-body">{{ error }}</div>
+    </div>
   {% endif %}
 
-  <form method="post" style="margin-top:12px;">
-    <label for="roleInput">Requested role</label>
-    <input
-      id="roleInput"
-      type="text"
-      name="role"
-      placeholder="enter the role"
-      autocomplete="off"
-      required
-    >
+  <div class="section">
+    <h3 class="section-title">Authorization Adjustment</h3>
+    <p class="muted">Submit a desired state for evaluation.</p>
 
-    <button type="submit">Submit Request</button>
-  </form>
+    <form method="post" class="form">
+      <label for="roleInput">Requested role</label>
+      <input
+        id="roleInput"
+        type="text"
+        name="role"
+        placeholder="enter the required role"
+        autocomplete="off"
+        required
+      >
+
+      <button type="submit" class="btn">Submit for Evaluation</button>
+      <p class="fineprint">Changes may not be reflected immediately.</p>
+    </form>
+  </div>
 </div>
 
 <script>
-  // Minimal, UX-only warning toggle (doesn't reveal anything about backend behavior)
   (function () {
     const input = document.getElementById("roleInput");
     const notice = document.getElementById("adminNotice");
@@ -57,17 +58,13 @@
     const normalize = (s) => (s || "").trim().toLowerCase();
 
     function sync() {
-      // Show warning only for exact "admin"
       notice.style.display = (normalize(input.value) === "admin") ? "block" : "none";
     }
 
     input.addEventListener("input", sync);
-    // Handles autofill / back-forward cache / reload
     window.addEventListener("pageshow", sync);
     sync();
   })();
 </script>
 
 {% endblock %}
-
-
