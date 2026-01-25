@@ -2,69 +2,49 @@
 {% block content %}
 
 <div class="card">
-  <div class="card-head">
-    <div>
-      <h2 class="title">Identity Configuration</h2>
-      <p class="muted">Subject Identifier: <b>{{ session.username }}</b></p>
-    </div>
+  <h2>Authorization Requests</h2>
 
-    <div class="pill">
-      <span class="pill-label">Authorization State</span>
-      <span class="pill-value">{{ role }}</span>
-    </div>
+  <p class="muted" style="margin-top:-6px;">
+    Requests are recorded immediately. Status updates may be delayed.
+    <br>
+    Observational notes may appear after repeated submissions (every <b>3</b> requests; max <b>3</b> notes).
+  </p>
+
+  <table class="status-table">
+    <tr>
+      <th>Requested State</th>
+      <th>Recorded Status</th>
+    </tr>
+    {% for r in requests %}
+    <tr>
+      <td style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;">
+        {{ r.requested }}
+      </td>
+      <td>
+        {% if r.status == "Pending" %}
+          <span style="display:inline-block; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:800; background:#eef2ff; color:#3730a3;">
+            Pending
+          </span>
+        {% elif r.status == "Invalid Role" %}
+          <span style="display:inline-block; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:800; background:#fff7ed; color:#7c2d12;">
+            Invalid Role
+          </span>
+        {% else %}
+          <span style="display:inline-block; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:800; background:#f3f4f6; color:#374151;">
+            {{ r.status }}
+          </span>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  {% if hint %}
+  <div class="message" style="margin-top:16px;">
+    <b>Observation Note</b><br>
+    {{ hint }}
   </div>
-
-  <hr class="soft">
-
-  <!-- Hidden by default; shown only when user types "admin" -->
-  <div id="adminNotice" class="callout warn" style="display:none;">
-    <div class="callout-title">Notice</div>
-    <div class="callout-body">Admin role requests require special approval.</div>
-  </div>
-
-  {% if error %}
-    <div class="callout danger">
-      <div class="callout-title">Input rejected</div>
-      <div class="callout-body">{{ error }}</div>
-    </div>
   {% endif %}
-
-  <div class="section">
-    <h3 class="section-title">Authorization Adjustment</h3>
-    <p class="muted">Submit a desired state for evaluation.</p>
-
-    <form method="post" class="form">
-      <label for="roleInput">Requested role</label>
-      <input
-        id="roleInput"
-        type="text"
-        name="role"
-        placeholder="enter the required role"
-        autocomplete="off"
-        required
-      >
-
-      <button type="submit" class="btn">Submit for Evaluation</button>
-      <p class="fineprint">Changes may not be reflected immediately.</p>
-    </form>
-  </div>
 </div>
-
-<script>
-  (function () {
-    const input = document.getElementById("roleInput");
-    const notice = document.getElementById("adminNotice");
-
-    const normalize = (s) => (s || "").trim().toLowerCase();
-
-    function sync() {
-      notice.style.display = (normalize(input.value) === "admin") ? "block" : "none";
-    }
-
-    input.addEventListener("input", sync);
-    window.addEventListener("pageshow", sync);
-    sync();
-  })();
-</script>
 
 {% endblock %}
