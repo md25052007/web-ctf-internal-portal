@@ -2,17 +2,17 @@
 {% block content %}
 
 <div class="card">
-    <h2>Employee Login</h2>
+    <h2>Internal Access Portal</h2>
 
     <p class="muted">
-        Username: <i>your name</i><br>
-        Password: <i>Refer to the access briefing</i>
+        Authentication is required to continue.
+        <br>
+        Username: <i>your name</i>
     </p>
 
-    <!-- Access Briefing QR Section -->
     <div class="message" style="margin-top:16px;">
-        <b>Access Briefing</b><br>
-        New users are required to review the official access briefing before logging in.
+        <b>Required Access Briefing</b><br>
+        New subjects must review the briefing before initial access.
         <div style="margin-top:12px; text-align:center;">
             <img
                 src="{{ url_for('static', filename='qr.png') }}"
@@ -38,7 +38,7 @@
         <label>Password</label>
         <input type="password" name="password" required>
 
-        <button type="submit">Login</button>
+        <button type="submit">Verify Access</button>
     </form>
 </div>
 
