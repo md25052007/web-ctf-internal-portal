@@ -1,16 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Internal Access Portal</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
 <header>
-    <nav>
-        <a href="/profile">Profile</a>
-        <a href="/status">Status</a>
-        <a href="/admin">Admin</a>
-        <a href="/logout">Logout</a>
+    <nav class="nav">
+        <div class="nav-left">
+            <span class="nav-brand">CITY.NET / Access</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="/profile" class="{% if request.path.startswith('/profile') %}active{% endif %}">Profile</a>
+            <a href="/status" class="{% if request.path.startswith('/status') %}active{% endif %}">Status</a>
+            <a href="/admin" class="{% if request.path.startswith('/admin') %}active{% endif %}">Admin</a>
+            <a href="/logout" class="nav-logout">Logout</a>
+        </div>
     </nav>
 </header>
 
