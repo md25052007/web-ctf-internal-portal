@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 app = Flask(__name__)
 app.secret_key = "dev_secret_key"
 
-FLAG = "IET{pr3d1ct1ng_f41lur3_cr34t3$_1t}"
+FLAG = "IET{th3_p@tt3rn_0pt1m1z3d_hum@n}"
 
 # NEW LOGIN PASSWORD (from your XOR challenge plaintext)
 LOGIN_PASSWORD = "FLAG{n!c3_tr&_but_n0p3_n0t_th3_fl@g}"
@@ -122,5 +122,6 @@ def admin():
 
 if __name__ == "__main__":
     app.run()
+
 
 
